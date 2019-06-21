@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context="com.example.eventreporter.MainActivity">
+
+    <fragment
+        android:id="@+id/event_fragment"
+        android:name="com.example.eventreporter.EventFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></fragment>
+</LinearLayout>
