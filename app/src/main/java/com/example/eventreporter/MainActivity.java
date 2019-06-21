@@ -11,10 +11,17 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements EventFragment.OnItemSelectListener {
 
     private EventFragment mListFragment;
     private CommentFragment mGridFragment;
+
+
+    @Override
+    public void onItemSelected(int position) {
+        mGridFragment.onItemSelected(position);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
