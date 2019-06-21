@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "243996793781",
+    "firebase_url": "https://eventreporter-db506.firebaseio.com",
+    "project_id": "eventreporter-db506",
+    "storage_bucket": "eventreporter-db506.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:243996793781:android:66bcaa6f0fa5eb82",
+        "android_client_info": {
+          "package_name": "com.example.eventreporter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "243996793781-rhb5dj2vs0hq9v2dcm8rs43soaf405is.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKfpL309pwhpv90NPWC34HlrWGF8JViJ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "243996793781-rhb5dj2vs0hq9v2dcm8rs43soaf405is.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
