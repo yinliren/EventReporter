@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 
@@ -25,8 +26,18 @@ public class EventFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_event, container, false);
         ListView listView = (ListView) view.findViewById(R.id.event_list);
-        listView.setAdapter(new EventAdapter(getActivity()));
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                getActivity(), android.R.layout.simple_list_item_1, getEventNames());
+        // Assign adapter to ListView.
+        listView.setAdapter(adapter);
         return view;
+
+    }
+
+    private String[] getEventNames() {
+        String[] names = {
+                "Event1", "Event2", "Event3", "Event4", "Event5", "Event6", "Event7", "Event8", "Event9", "Event10", "Event11", "Event12"};
+        return names;
     }
 
 }

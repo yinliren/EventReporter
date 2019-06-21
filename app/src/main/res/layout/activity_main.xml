@@ -7,9 +7,13 @@
     android:orientation="horizontal"
     tools:context="com.example.eventreporter.MainActivity">
 
-    <fragment
-        android:id="@+id/event_fragment"
-        android:name="com.example.eventreporter.EventFragment"
+    <RelativeLayout
+        android:id="@+id/event_container"
+        android:layout_width="200dp"
+        android:layout_height="match_parent"></RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/comment_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></fragment>
+        android:layout_height="match_parent"></RelativeLayout>
 </LinearLayout>
