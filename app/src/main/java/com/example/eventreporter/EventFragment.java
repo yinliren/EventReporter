@@ -57,7 +57,10 @@ public class EventFragment extends Fragment {
 
     private String[] getEventNames() {
         String[] names = {
-                "Event1", "Event2", "Event3", "Event4", "Event5", "Event6", "Event7", "Event8", "Event9", "Event10", "Event11", "Event12"};
+                "Event1", "Event2", "Event3",
+                "Event4", "Event5", "Event6",
+                "Event7", "Event8", "Event9",
+                "Event10", "Event11", "Event12"};
         return names;
     }
 
