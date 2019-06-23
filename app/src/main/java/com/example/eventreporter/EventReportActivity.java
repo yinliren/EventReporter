@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,6 +23,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +49,10 @@ public class EventReportActivity extends AppCompatActivity {
     private ImageView img_event_picture;
     private Uri mImgUri;
 
+    //Set variables ready for uploading images
+    private FirebaseStorage storage;
+    private StorageReference storageRef;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +65,11 @@ public class EventReportActivity extends AppCompatActivity {
         mImageViewSend = (ImageView) findViewById(R.id.img_event_report);
         database = FirebaseDatabase.getInstance().getReference();
         img_event_picture = (ImageView) findViewById(R.id.img_event_picture_capture);
+
+        //initizlize cloud storage
+        storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReference();
+
 
         //Add click listener for the image to pick up images from gallery through implicit intent
         mImageViewCamera.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +86,10 @@ public class EventReportActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String key = uploadEvent();
+                if (mImgUri != null) {
+                    uploadImage(key);
+                    mImgUri = null;
+                }
             }
         });
 
@@ -187,7 +205,34 @@ public class EventReportActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Upload image picked up from gallery to Firebase Cloud storage
+     * @param eventId eventId
+     */
+    private void uploadImage(final String eventId) {
+        if (mImgUri == null) {
+            return;
+        }
 
+        StorageReference imgRef = storageRef.child("images/" + mImgUri.getLastPathSegment() + "-" + System.currentTimeMillis());
+        UploadTask uploadTask = imgRef.putFile(mImgUri);
+
+        // Register observers to listen for when the download is done or if it fails
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                @SuppressWarnings("VisibleForTests")
+                Uri downloadUrl = taskSnapshot.getUploadSessionUri(); // It was taskSnapshot.getDownloadUrl()
+                Log.i(TAG, "upload successfully" + eventId);
+                database.child("events").child(eventId).child("imgUri").setValue(downloadUrl.toString());
+            }
+        });
+    }
 
 
     @Override
