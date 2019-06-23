@@ -1,6 +1,9 @@
 package com.example.eventreporter;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,11 +34,15 @@ public class EventReportActivity extends AppCompatActivity {
     private ImageView mImageViewSend;
     private ImageView mImageViewCamera;
     private DatabaseReference database;
-
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-
     private LocationTracker mLocationTracker;
+
+
+    //Set variables ready for picking images
+    private static int RESULT_LOAD_IMAGE = 1;
+    private ImageView img_event_picture;
+    private Uri mImgUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +55,19 @@ public class EventReportActivity extends AppCompatActivity {
         mImageViewCamera = (ImageView) findViewById(R.id.img_event_camera);
         mImageViewSend = (ImageView) findViewById(R.id.img_event_report);
         database = FirebaseDatabase.getInstance().getReference();
+        img_event_picture = (ImageView) findViewById(R.id.img_event_picture_capture);
+
+        //Add click listener for the image to pick up images from gallery through implicit intent
+        mImageViewCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(
+                        Intent.ACTION_PICK,
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, RESULT_LOAD_IMAGE);
+            }
+        });
+
         mImageViewSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,6 +161,33 @@ public class EventReportActivity extends AppCompatActivity {
                 });
         return key;
     }
+
+
+    /**
+     * Send Intent to launch gallery for us to pick up images, once the action finished, images
+     * will be returned as parameters in this function
+     * @param requestCode code for intent to start gallery activity
+     * @param resultCode result code returned when finishing picking up images from gallery
+     * @param data content returns from gallery, including images we picked
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+                Uri selectedImage = data.getData(); // Position of the image
+                img_event_picture.setVisibility(View.VISIBLE);
+                img_event_picture.setImageURI(selectedImage);
+                mImgUri = selectedImage;
+            }
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
+
 
 
     @Override
