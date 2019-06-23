@@ -174,6 +174,8 @@ public class EventReportActivity extends AppCompatActivity {
                             mEditTextTitle.setText("");
                             mEditTextLocation.setText("");
                             mEditTextContent.setText("");
+                            img_event_picture.setImageDrawable(null);
+                            img_event_picture.setVisibility(View.GONE);
                         }
                     }
                 });
