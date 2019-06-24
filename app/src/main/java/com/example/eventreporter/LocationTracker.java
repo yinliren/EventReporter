@@ -142,6 +142,7 @@ public class LocationTracker implements LocationListener {
             while ((b = stream.read()) != -1){
                 stringBuilder.append((char) b);
             }
+            Log.i("Location Result ", stringBuilder.toString());
         } catch (ClientProtocolException e) {
         } catch (IOException e) {
         }

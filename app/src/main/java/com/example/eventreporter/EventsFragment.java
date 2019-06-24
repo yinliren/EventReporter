@@ -64,6 +64,10 @@ public class EventsFragment extends Fragment {
         return view;
     }
 
+
+    /*
+     *  Set adapter for recycler view to show all events
+     */
     public void setAdapter() {
         events = new ArrayList<Event>();
         database.child("events").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -73,7 +77,7 @@ public class EventsFragment extends Fragment {
                     Event event = noteDataSnapshot.getValue(Event.class);
                     events.add(event);
                 }
-                mAdapter = new EventListAdapter(events);
+                mAdapter = new EventListAdapter(events, getActivity());
                 recyclerView.setAdapter(mAdapter);
             }
 
