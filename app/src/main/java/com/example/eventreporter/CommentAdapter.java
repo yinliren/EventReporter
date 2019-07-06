@@ -193,7 +193,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private void configureCommentView(final CommentViewHolder holder, final int position) {
         int pos = position - 1;
-        Comment comment = commentList.get(pos);
+        final Comment comment = commentList.get(pos);
         holder.commentUser.setText(comment.getCommenter());
         holder.commentDescription.setText(comment.getDescription());
         holder.commentTime.setText(Utils.timeTransformer(comment.getTime()));
